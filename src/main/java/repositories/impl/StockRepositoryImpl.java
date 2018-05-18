@@ -6,33 +6,43 @@ import databases.StockDB;
 import models.Stock;
 import repositories.interfaces.StockRepository;
 
-public class StockRepositoryImpl implements StockRepository {
+public final class StockRepositoryImpl implements StockRepository {
 
-	private StockDB stockDB;
+	private StockDB _stockDBInstance = StockDB.getInstance();
 
-	public StockRepositoryImpl() {
-		super();
-		this.stockDB = new StockDB();
+	private static StockRepositoryImpl instance;
+
+	private StockRepositoryImpl() throws IllegalAccessException {
+		if (instance != null) {
+			throw new IllegalAccessException("This instance should be created only via getInstance() method");
+		}
+	};
+
+	public static StockRepositoryImpl getInstance() throws IllegalAccessException {
+		if (instance == null) {
+			instance = new StockRepositoryImpl();
+		}
+		return instance;
 	}
 
 	@Override
 	public Stock getStockBySymbol(String symbol) {
-		return stockDB.getAllobjects().get(symbol);
+		return _stockDBInstance.getAllobjects().get(symbol);
 	}
 
 	@Override
 	public Map<String, Stock> getAllStocks() {
-		return stockDB.getAllobjects();
+		return _stockDBInstance.getAllobjects();
 	}
 
 	@Override
 	public void save(Stock stock) {
-		stockDB.addObject(stock);
+		_stockDBInstance.addObject(stock);
 	}
 
 	@Override
 	public void removeStock(String symbol) {
-		stockDB.removeObject(symbol);
+		_stockDBInstance.removeObject(symbol);
 	}
 
 }

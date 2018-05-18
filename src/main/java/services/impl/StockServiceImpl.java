@@ -9,26 +9,26 @@ import repositories.impl.StockRepositoryImpl;
 import repositories.interfaces.StockRepository;
 import services.interfaces.StockService;
 
-public class StockServiceImpl implements StockService {
+public final class StockServiceImpl implements StockService {
 
-	private StockRepository stockRepository;
+	private StockRepository _stockRepositoryInstance;
 
-	public StockServiceImpl() {
-		super();
-		this.stockRepository = new StockRepositoryImpl();
+	public StockServiceImpl() throws IllegalAccessException {
+		this._stockRepositoryInstance = StockRepositoryImpl.getInstance();
 	}
 
 	@Override
 	public void create(String symbol, StockType stockType) throws StockServiceException {
-		if (stockRepository.getStockBySymbol(symbol) != null) {
-			throw new StockServiceException("Stock " + symbol + " already exist!");
-		}
+
 		if (symbol == null || stockType == null) {
 			throw new StockServiceException("symbol and stockType cannot be null!");
 		}
+		if (_stockRepositoryInstance.getStockBySymbol(symbol) != null) {
+			throw new StockServiceException("Stock " + symbol + " already exist!");
+		}
 		Stock stock = new Stock(symbol, stockType);
 		try {
-			this.stockRepository.save(stock);
+			this._stockRepositoryInstance.save(stock);
 		} catch (Exception ignored) {
 			throw new StockServiceException("Stock " + stock.getSymbol() + " already exist!");
 		}
@@ -38,7 +38,7 @@ public class StockServiceImpl implements StockService {
 	public Map<String, Stock> readAll() throws StockServiceException {
 		Map<String, Stock> allRecords;
 		try {
-			allRecords = this.stockRepository.getAllStocks();
+			allRecords = this._stockRepositoryInstance.getAllStocks();
 		} catch (Exception ignored) {
 			throw new StockServiceException("Unable to read all records!");
 		}
@@ -53,7 +53,7 @@ public class StockServiceImpl implements StockService {
 
 		Stock oneRecord;
 		try {
-			oneRecord = this.stockRepository.getStockBySymbol(symbol);
+			oneRecord = this._stockRepositoryInstance.getStockBySymbol(symbol);
 		} catch (Exception ignored) {
 			throw new StockServiceException("Error finding: " + symbol);
 		}
@@ -67,7 +67,7 @@ public class StockServiceImpl implements StockService {
 		}
 		StringBuilder sb = new StringBuilder();
 		try {
-			this.stockRepository.removeStock(symbol);
+			this._stockRepositoryInstance.removeStock(symbol);
 			sb.append("Record: " + symbol + "successfully deleted!");
 		} catch (Exception ignored) {
 			sb.append("Record: " + symbol + "cannot be deleted!");
