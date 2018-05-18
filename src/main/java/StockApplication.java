@@ -13,7 +13,9 @@ public class StockApplication {
 			System.out.println(String.format("Key: %s, Value: %s", k, v));
 		});
 
-		service.create("45", StockType.PREFERRED);
+		System.out.println(service.create("45", StockType.PREFERRED));
+		System.out.println(service.readOne("B"));
+		System.out.println(service.deleteOne("45"));
 	}
 
 }

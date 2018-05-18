@@ -38,12 +38,19 @@ public final class StockDB extends Database<Stock> {
 
 	@Override
 	public void removeObject(String symbol) {
+		if (!stocksData.containsKey(symbol)) {
+			throw new IllegalArgumentException("Record: " + symbol + " does not exist!");
+		}
+
 		stocksData.remove(symbol);
 		this.saveStockData();
 	}
 
 	@Override
 	public void addObject(Stock stock) {
+		if (stocksData.containsKey(stock.getSymbol())) {
+			throw new IllegalArgumentException("Duplicate record: " + stock.getSymbol());
+		}
 		stocksData.put(stock.getSymbol(), stock);
 		this.saveStockData();
 	}

@@ -8,7 +8,7 @@ import models.Stock;
 
 public interface StockService {
 
-	void create(String symbol, StockType stockType) throws StockServiceException;
+	String create(String symbol, StockType stockType) throws StockServiceException;
 
 	Map<String, Stock> readAll() throws StockServiceException;
 
