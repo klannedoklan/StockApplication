@@ -2,13 +2,13 @@ package repositories.impl;
 
 import java.util.Map;
 
-import databases.StockDB;
+import databases.StockMySQLDB;
 import models.Stock;
 import repositories.interfaces.StockRepository;
 
 public final class StockRepositoryImpl implements StockRepository {
 
-	private StockDB _stockDBInstance = StockDB.getInstance();
+	private StockMySQLDB _stockDBInstance = StockMySQLDB.getInstance();
 
 	private static StockRepositoryImpl instance;
 
@@ -27,7 +27,7 @@ public final class StockRepositoryImpl implements StockRepository {
 
 	@Override
 	public Stock getStockBySymbol(String symbol) {
-		return _stockDBInstance.getAllobjects().get(symbol);
+		return _stockDBInstance.findOneById(symbol);
 	}
 
 	@Override

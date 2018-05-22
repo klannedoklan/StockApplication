@@ -18,14 +18,14 @@ public final class FileIO {
 	};
 
 	public static List<String> read(String file) throws IOException {
-		String path = System.getProperty("user.dir") + "/src/main/resources/" + file;
+		String path = StockDBConstants.RESOURCE_DIR + file;
 		try (Stream<String> stream = Files.lines(Paths.get(path))) {
 			return stream.map(s -> s.toString()).collect(Collectors.toList());
 		}
 	}
 
 	public static void write(String fileContent, String file) throws IOException {
-		String path = System.getProperty("user.dir") + "/src/main/resources/" + file;
+		String path = StockDBConstants.RESOURCE_DIR + file;
 		try (OutputStream outputStream = new FileOutputStream(path);
 				BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream))) {
 			bufferedWriter.write(fileContent);

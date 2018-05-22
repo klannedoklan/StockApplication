@@ -19,7 +19,6 @@ public final class StockServiceImpl implements StockService {
 
 	@Override
 	public String create(String symbol, StockType stockType) throws StockServiceException {
-
 		if (symbol == null || stockType == null) {
 			throw new StockServiceException("symbol and stockType cannot be null!");
 		}
@@ -37,13 +36,6 @@ public final class StockServiceImpl implements StockService {
 
 	@Override
 	public Map<String, Stock> readAll() throws StockServiceException {
-		// Map<String, Stock> allRecords;
-		// try {
-		// allRecords = this._stockRepositoryInstance.getAllStocks();
-		// } catch (Exception ignored) {
-		// // refactor to throw early as possible an catch here
-		// throw new StockServiceException("Unable to read all records!");
-		// }
 		return this._stockRepositoryInstance.getAllStocks();
 	}
 

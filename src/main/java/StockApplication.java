@@ -7,15 +7,15 @@ public class StockApplication {
 
 	public static void main(String[] args) throws StockServiceException, IllegalAccessException {
 
-		StockService service = new StockServiceImpl();
+		StockService stockService = new StockServiceImpl();
 
-		service.readAll().forEach((k, v) -> {
+		stockService.readAll().forEach((k, v) -> {
 			System.out.println(String.format("Key: %s, Value: %s", k, v));
 		});
 
-		System.out.println(service.create("45", StockType.PREFERRED));
-		System.out.println(service.readOne("B"));
-		System.out.println(service.deleteOne("45"));
+		System.out.println(stockService.create("LKXJ", StockType.PREFERRED));
+		System.out.println(stockService.readOne("B"));
+		System.out.println(stockService.deleteOne("LKXJ"));
 	}
 
 }
