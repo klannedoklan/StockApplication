@@ -11,7 +11,7 @@ import java.util.Map;
 import enums.StockType;
 import models.Stock;
 
-public final class StockMySQLDB extends Database<Stock> implements DatabaseExtend<Stock> {
+public final class StockMySQLDB implements DatabaseExtend<Stock> {
 
 	private static final String SELECT_ALL_STOCKS_QUERY = "SELECT symbol, stock_type FROM stocks";
 	private static final String INSERT_STOCK_QUERY = "INSERT INTO stocks (symbol, stock_type) VALUES (?,?)";
